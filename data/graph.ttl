@@ -1,0 +1,126 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix hydra: <http://www.w3.org/ns/hydra/core#> .
+@prefix xhtml: <http://www.w3.org/1999/xhtml#> .
+@prefix schema: <http://schema.org/> .
+@prefix meme: <http://api.gannett.com/vocab/meme#> .
+
+###===================================================================
+### Properties
+###===================================================================
+
+meme:hasRecentMemeCollection 
+    rdf:type rdfs:Property ;
+    rdfs:range hydra:Collection ;
+    rdfs:comment "The recent memes on the site" .
+
+
+meme:hasSearchIriTemplate
+    rdf:type rdfs:Property ;
+    rdfs:range hydra:IriTemplate ;
+    rdfs:comment "The search template for making a search" .
+
+meme:hasSearchResultCollection
+    rdf:type rdfs:Property ;
+    rdfs:range hydra:Collection ;
+    rdfs:comment "A collection of search results" .
+
+
+###===================================================================
+### Classes
+###===================================================================
+
+meme:IndexPage 
+    rdfs:type hydra:Resource ;
+    rdfs:comment "The index page of meme search" .
+	       
+meme:SearchResultPage 
+    rdfs:type hydra:Link ;
+    rdfs:type schema:ItemPage ;
+    rdfs:comment "Our search results page" .
+
+meme:Meme
+    rdfs:type hydra:Resource ;
+    rdfs:type schema:CreativeWork ;
+    rdfs:comment "A individual meme class" .
+
+meme:MemeItemPage
+    rdfs:type hydra:Link ;
+    rdfs:type schema:ItemPage ;
+    rdfs:type meme:Meme ;
+    rdfs:comment "A meme detail page" .
+
+
+###===================================================================
+### Base Objects
+###===================================================================
+
+meme:searchResultTemplate 
+    rdf:type hydra:IriTemplate ;
+    hydra:template "/search{?q}" ;
+    hydra:mapping meme:searchResultMappingQ ;
+    rdfs:comment "The template for making a search" .
+
+
+meme:searchResultMappingQ
+    rdf:type hydra:IriTemplateMapping ;
+    rdf:comment "" ;
+    hydra:variable "q" ;
+    hydra:property: hydra:freetextQuery ;
+    rdfs:comment "The search query for a meme search" .    
+
+
+<6urDWca>
+    meme:topText "You're using linked data?"@en ;
+    meme:bottomText "Why didn't you link to me"@en ;
+    schema:image <../6urDWca.png> ;
+    schema:dateCreated "2014-02-26T17:57Z" ;
+    rdf:type meme:Meme ;
+    rdf:type meme:MemePage ;
+    rdf:type hydra:Link ;
+    rdf:type schema:CreativeWork .
+
+
+<8WcPWyY>
+    meme:topText "If you make a restful web api without linked data"@en ;
+    meme:bottomText "You're going to have a bad time"@en ;
+    schema:dateCreated "2014-02-26T14:57Z" ;
+    schema:image <../8WcPWyY.png> ;
+    rdf:type meme:Meme ;
+    rdf:type meme:MemePage ;
+    rdf:type hydra:Link ;
+    rdf:type schema:CreativeWork .
+
+
+<fCEZRTH>
+    meme:topText "application/rdf+xml"@en ;
+    meme:bottomText "What year is it?"@en ;
+    schema:dateCreated "2014-02-26T14:53Z" ;
+    schema:image <../fCEZRTH.png> ;
+    rdf:type meme:Meme ;
+    rdf:type meme:MemePage ;
+    rdf:type hydra:Link ;
+    rdf:type schema:CreativeWork .
+
+
+<invents-rdf>
+    meme:topText "Invents RDF"@en ;
+    meme:bottomText "Everyone thinks it is just XML"@en ;
+    schema:dateCreated "2014-02-26T15:02Z" ;
+    schema:image <../invents-rdf.png> ;
+    rdf:type meme:Meme ;
+    rdf:type meme:MemePage ;
+    rdf:type hydra:Link ;
+    rdf:type schema:CreativeWork .
+
+
+<RtpMI3B>
+    meme:topText "You dawg I heard you like linking"@en ;
+    meme:bottomText "So we put linked data in your rest so you rest while you link"@en ;
+    schema:dateCreated "2014-02-26T14:41Z" ;
+    schema:image <RtpMI3B.png> ;
+    rdf:type meme:Meme ;
+    rdf:type meme:MemePage ;
+    rdf:type hydra:Link ;
+    rdf:type schema:CreativeWork .
+

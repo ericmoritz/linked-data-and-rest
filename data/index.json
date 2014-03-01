@@ -1,0 +1,34 @@
+{
+    "@context": [
+	"http://www.w3.org/ns/hydra/context.jsonld",
+	{
+	    "schema": "http://schema.org/",
+	    "meme": "http://api.gannett.com/vocab/meme#",
+	    "recent": "meme:hasRecentMemeCollection",
+	    "member": {"@id": "hydra:member", "@container": "@list"},
+	    "title": "schema:title",
+	    "search": "meme:hasSearchIriTemplate"
+	}
+    ],
+    "title": "Meme Search",
+    "@id": "/",
+    "@type": ["meme:IndexPage", "schema:WebPage", "hydra:Resource"],
+    "recent": {
+	"member": [
+	    "RtpMI3B",
+	    "fCEZRTH",
+	    "8WcPWyY",
+	    "invents-rdf",
+	    "6urDWca"
+	]
+    },
+    "search": {
+	"@type": "IriTemplate",
+	"template": "search{?q}",
+	"mapping": [{
+	    "@type": "IriTemplateMapping",
+	    "variable": "q",
+	    "property": "hydra:freetextQuery"
+	}]
+    }
+}

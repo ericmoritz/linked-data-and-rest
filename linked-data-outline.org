@@ -1,0 +1,370 @@
+* Linked Data and REST
+  :PROPERTIES:
+  :subtitle: How can we finally get some REST?
+  :END:
+** Thesis 
+* Linked Data and REST
+** Explain the talk
+   :PROPERTIES:
+   :title: [[http://linkeddata.org/][Linked Data]] and [[https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm][REST]]
+   :END:
+
+** Introduce myself
+   :PROPERTIES:
+   :title: [[http://linkeddata.org/][Linked Data]] and [[https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm][REST]]
+   :subTitle: Who is <http://eric.themoritzfamily.com>
+   :END:
+
+For people that don't know who I am, which may be many of you.  I am
+Eric Moritz.  I am currently the architect of the application services
+team at Gannett Digital.
+
+One of the requirements of the application services team is to build
+interfaces between core and end user applications. These services need
+to iterate as quickly as the app developers need us to change.
+
+In addition to quick iteration, changes to services MUST not disrupt
+existing apps.
+
+** Explain what REST is
+   :PROPERTIES:
+   :title: The promise of RESTful Services
+   :image: {robot-talking-to-kid}
+   :END:
+
+These requirements lead me down a road of extensive research because
+current approaches to RESTful services do not meet these requirements.
+
+When I went back to the specifications of RESTful services and I was
+surprised to learn that the original requirements of Web applications
+aligned with our goals.
+
+** WWW Application Domain requirements
+
+I have to appologize; these requirements are in "architect" speak.
+I will try my best to translate them.
+
+** Low Entry-barrier
+
+"Hypermedia was chosen as the user interface because of its simplicity
+and generality: the same interface can be used regardless of the
+information source"
+
+aka "Hypermedia drives the user interface"
+
+Before I move onto the other requirements; Let me explain hypermedia
+and how it can drive different user agents.  If you are unaware,
+user agent is HTTP speak for a piece of software that acts on behalf
+of the user.  A user agent is Tron.
+
+** The engine of application state...
+
+So you may have heard the phrase "Hypermedia as the engine of
+application state" or seen it as an acronym "HATEOAS". 
+
+If you haven't, don't worry. It is just something developers say to
+make you feel dumb.
+
+The concept is very simple. It is so simple that you shouldn't feel
+dumb because you already understand it if you have used the web.
+
+So the word "state" there is commonly misunderstood.  Most developers,
+including myself, when first introduced to hypermedia services
+automatically think that state is the application's data. This is
+because state and data are synonyms in software.
+
+However, state in this context, does not mean data; it is the state
+that the application is in.  In this case the application is a "user
+agent", working on behalf of the user intention. Therefore state
+translates the state the user is in while using the application.
+
+If you look at the diagram on the slide; you will see three different
+states that the user can be in.
+
+They'll start in the state of "Browsing the homepage" and notice a
+section that they want to start browsing. By clicking the section
+link, they transition to the state they want, the state of "browsing a
+section".  While browsing the section, they will find a story they
+want to read, click on the story and transition to the state that they
+want, which is reading a story.
+
+This is simple; by now we understand it intuitively.
+
+** What HTML looks like to humans
+
+We understand this intuitively, because of the most successfuly
+hypermedia format; HTML, the hypertext markup language.
+
+HTML work extremely well for human interaction and has done so
+since 1993.  Without HTML, we'd be out of a job.
+
+If you look at this slide, you'll see a rendering of our beautiful
+mobile site. A user will start the state of "Browsing our homepage", bring up the section
+list and decide to browse the life section.  By clicking on the link
+to the life section, the transition to the state they wanted, the
+state of "Browsing the life section".
+
+Almost instantaneously, the will say, "OMG Katy Perry" and take her
+head to transition to the state of reading the story about Katy Perry.
+
+This is hypermedia in a nutshell; it is simply a site map.  Hypermedia
+is how a web browser drives the interactions of a user.
+
+Unfortunately despite HTML working so well for this kind of
+interactions, it only works in a web browser. If we wanted to use the
+same service to drive the interactions of a mobile app, we'd be
+forced to use a WebView. I can see you cringing out there.
+
+So what is the answer if we want to drive any user agent with the same
+service?  We have to use a hypermedia format that exposes the raw
+data but still has the ability to direct the interactions of the user.
+
+** What User-Agents need
+
+What user agents need is something like this they need the raw data
+and hypermedia links to direct the interactions of the user.
+
+With this representation of the site map, we're able to drive desktop
+web, mobile web, android apps and iphone apps with the same service.
+
+All these user agents all have the same site map they start with an
+initial screen, allow the user to browse a section and allow the user
+to read a story.  
+
+The only difference is the way this data is presented to the user.
+That presentation could be native controls on a mobile device or HTML
+controls in a web browser. In fact, this raw data can drive any
+application that has the same site map.  We could use this service of
+a drive an app on a TV, or in a car with text to speech. We could even
+use the service to print a newspaper.  A newspaper has the same site
+map: frontpage, sections, stories.
+
+So this is why the hypermedia requirement is so important.  It allows
+us to drive many different user agents with the same service; cutting
+down on maintenance costs and operation costs.
+
+Lets move on to the other three requirement's; I promise that I won't
+take as long to explain them.
+
+** Extensibility
+
+Next, extensibility. When you have many different user agents using
+the same service, you don't have the luxury of upgrading all the
+clients with the service.  
+
+So any solution that services many different user agents, must be
+able to evolve without disruption of current users of the service.
+
+** Distributed Hypermedia
+
+So distributed hypermedia; for the life of me, I don't know why this
+is called "Distributed Hypermedia". When you read the text of the
+requirement, It is about user perceived latency.
+
+
+
+*** Explain what REST really is.
+    :PROPERTIES:
+    :title: The Church of REST...
+    :END:
+
+
+**** Low Entry-barrier
+     :PROPERTIES:
+     :title: The Church of REST...
+     :END:
+
+The basic gist of this requirement is that the barrier to entry for
+authorship and user must be low.
+
+"*Hypermedia* was chosen as the *user interface* because of its simplicity
+and generality" They chose it because it was the *same interface*
+regardless of information source. 
+
+We as developers have to build software that uses the same interface
+as much as possible.
+
+We missed this requirement hard.  Each service has its own unique JSON or
+XML format and there is never a common interface. 
+
+***** 
+      :PROPERTIES:
+      :url:http://www.ics.uci.edu/~fielding/pubs/dissertation/web_arch_domain.htm#sec_4_1_1
+      :citation: Fielding Dissertation 4.1.1
+      :type: Quote
+      :END:
+
+     “Hypermedia was chosen as the user interface because of its
+    simplicity and generality: the same interface can be used
+    regardless of the information source, the flexibility of
+    hypermedia relationships (links) allows for unlimited structuring,
+    and the direct manipulation of links allows the complex
+    relationships within the information to guide the reader through
+    an application.”
+    
+    [[http://www.ics.uci.edu/~fielding/pubs/dissertation/web_arch_domain.htm#sec_4_1_1][Fielding Dissertation 4.1.1]]
+
+**** Extensibility
+     :PROPERTIES:
+     :title: The Church of REST...
+     :END:
+     
+     Now, this quote, I will read:
+
+     "While simplicity makes it possible to deploy an initial
+     implementation of a distributed system, extensibility allows us
+     to avoid getting stuck forever with the limitations of what was
+     deployed."
+
+     Did that hit home for anyone? If your service has a "v1" and a
+     "v2" in the URL; you missed this requirement. Enough said.
+
+***** 
+      :PROPERTIES:
+      :url:http://www.ics.uci.edu/~fielding/pubs/dissertation/web_arch_domain.htm#sec_4_1_2
+      :citation: Fielding Dissertation 4.1.2
+      :type: Quote
+      :END:
+
+     “While simplicity makes it possible to deploy an initial
+     implementation of a distributed system, extensibility allows us
+     to avoid getting stuck forever with the limitations of what was
+     deployed.”
+    
+     [[http://www.ics.uci.edu/~fielding/pubs/dissertation/web_arch_domain.htm#sec_4_1_2][Fielding Dissertation 4.1.2]]
+
+**** Distributed Hypermedia
+     :PROPERTIES:
+     :title: The Church of REST...
+     :END:
+     
+     This requirement is strictly about cutting down user-perceived
+     latency of a resource.  This should be the <250ms constraint on
+     any Web application. 250ms is maximum latency a person perceives
+     as instantaneous. If your content isn't in front of user's eye
+     balls in less than 250ms, they'll think it is slow.  That isn't
+     an opinion, that is science.
+
+     This means that the "time to interaction" must be less than
+     250ms, but your service's data has to be ready for the user-agent
+     to display well before 250ms.  So the "time to last byte" 
+     250ms minus the time to render the content.
+
+     If you're not monitoring this stuff and being strict keeping
+     250ms time to interaction for 99% of your users, your users are
+     likely being annoyed.
+
+     I digressed a bit from this requirement to rant about a personal
+     crusade but I'll just say that this requirement in terms of web
+     services means we need to bundle as much data as possible to
+     service the request in under <250ms.
+
+     This requirement is also the caching requirement. Our user-agents
+     and services need to use HTTP caching effectively to drive down
+     this latency.  
+
+     This means, for the love of god, use conditional GETs to save on
+     processing and bandwidth...  A mobile device can be made to only
+     download content if it has changed and it is built into HTTP.
+
+**** Internet-scale
+     :PROPERTIES:
+     :title: The Church of REST...
+     :END:
+     
+     Web-scale, the punch line to many MongoDB jokes... Scale in this
+     case doesn't mean performance or the ability to services one
+     million clients concurrently. This requirement is the "data
+     sharing" requirement.  This requires that if I take data from
+     one service and use it in other service, no ids would collide
+     and the meaning behind fields would match up.
+
+     This is the requirement we are so far from reaching that we
+     should be fired for not meeting this requirement.
+
+     If building a RESTful service was building a tree house and this
+     requirement was equivalent to "put the house in a tree"; we put
+     the house underground.  That is how far we missed this
+     requirement.
+
+     In order to meet this requirement we have to meet two
+     sub-requirements.
+
+     First, Anarchic Scalability.  This is the sharing bit. "Most
+     software systems are created with the implicit assumption that
+     the entire system is under the control of one entity"
+
+     On the Internet, there is no one governing body that controls how
+     to structure your HTML.  You can do whatever you want as long as
+     we all agree on the semantics, or meaning of the tags in HTML.
+
+     This agreement on the meaning of the tags allows us to build
+     browsers that can display HTML in whatever way you determine fit.
+
+     This seems awesome right? Well we definitely have anarchy when
+     it comes to web services.  Everyone is creating their own ad-hoc
+     solution to a problem... That is fine, but we can share data.
+     We have to painstakingly explain what each field in our service
+     means and how the objects are related.  It is a mess.  Wouldn't
+     it be great of be had standard meanings for fields?
+
+     Second, Independent Deployment. This requirement gives us the
+     ability to deploy components of a distributed system
+     independently.  Meeting this requirement means that we can
+     deploy a service while the old client is still out there.
+
+     This requirement is a necessity when dealing with iPhones right?
+     We don't have the ability to deploy the client and service in
+     lockstep because Apple has control of the deployment of the
+     iPhone app.  So we have to carefully deploy our services without
+     breaking changes so that we don't disrupt the existing
+     application.  Wouldn't it be great of the technology we use
+     inherently had that property?  If we meet this requirement it
+     will.
+     
+**** Summarize the church of REST
+     :PROPERTIES:
+     :title: The church of REST...
+     :END:
+     
+
+*** Describe the current state of RESTful services
+
+    :PROPERTIES:
+    :title: The reality of "RESTful" services
+    :END:
+
+
+*** Explain what HATEOAS really is: a site map
+    :PROPERTIES:
+    :title: The engine of application state...
+    :END:
+**** What HTML looks like to humans
+**** What HTML looks like to computers
+**** What Computers actually need
+*** Summarize what REST is
+** Explain what we need to get to the one true REST
+*** JSON over HTTP: fail
+*** CSV over HTTP: fail
+*** XML over HTTP: fail
+***  XHTML/HTML over HTTP: fail for non-HTML user-agents
+*** RDFa+XHTML over HTTP: yay!
+*** Can RDF get us Hyphy?
+**** Low Entry barrier? 
+     All links, no control.
+****
+*** RDF+Hydra: yay!
+** Build a RESTful service
+*** Start with the interactions of the service
+*** Then build the site map
+*** Build an initial vocabulary
+*** Iterate on the vocab
+*** Mock the service with static files
+*** Tell the user-agent developers to get to work
+*** Iterate the mock with the user-agent developers to meet their requirements
+*** Make it dynamic.
+** Call to action
+  1. Use HTTP
+  2. Use Linked Data with Hydra
+  3. Monitor TTFB between services and TTI in the user-agents TTI
+     MUST be <250ms.
