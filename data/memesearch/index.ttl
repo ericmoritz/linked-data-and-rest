@@ -1,0 +1,40 @@
+@prefix meme: <http://example.com/vocab/meme#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix schema: <http://schema.org/> .
+@prefix hydra: <http://www.w3.org/ns/hydra/core#> .
+
+# Index Page
+<./>
+    rdf:type meme:IndexPage ;
+    rdf:type schema:WebPage ;
+    rdf:type hydra:Resource ;
+    rdf:type hydra:EntryPoint ;
+    schema:title "Meme Search"@en .
+
+# Search Template
+<./>
+    meme:search _:b1 .
+_:b1
+    rdf:type meme:SearchTemplate ;
+    rdf:type hydra:IriTemplate ;
+    hydra:mapping _:b2 ;
+    hydra:template <search{?q}> .
+_:b2
+    rdf:type hydra:IriTemplateMapping ;
+    hydra:variable "q" ;
+    hydra:property hydra:freetextQuery .
+
+# Recent Meme
+<./>
+    meme:recent _:b0 .
+_:b0 
+    rdf:type hydra:Collection ;
+    hydra:member <6urDWca> ;
+    hydra:member <invents-rdf> ;
+    hydra:member <8WcPWyY> .
+<6urDWca>    
+    rdf:type meme:RecentMeme ;
+    rdf:type meme:Meme ;
+    rdf:type schema:CreativeWork ;
+    rdf:type hydra:Link ;
+    schema:image <6urDWca.png> .

@@ -1,0 +1,1977 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+               "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Linked Data and REST part 1</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="title" content="Linked Data and REST part 1"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2014-03-03T21:45-0500"/>
+<meta name="author" content="Moritz"/>
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+
+</head>
+<body>
+
+<div id="preamble">
+
+</div>
+
+<div id="content">
+<h1 class="title">Linked Data and REST part 1</h1>
+
+
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1 Linked Data and REST</a>
+<ul>
+<li><a href="#sec-1-1">1.1 What is this</a></li>
+<li><a href="#sec-1-2">1.2 A journey through time and space</a></li>
+<li><a href="#sec-1-3">1.3 In the year 2000</a></li>
+<li><a href="#sec-1-4">1.4 Low Entry-barrier</a></li>
+<li><a href="#sec-1-5">1.5 Extensibility</a></li>
+<li><a href="#sec-1-6">1.6 Low time to interaction</a>
+<ul>
+<li><a href="#sec-1-6-1">1.6.1 Slide</a></li>
+<li><a href="#sec-1-6-2">1.6.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-7">1.7 Internet-scale</a>
+<ul>
+<li><a href="#sec-1-7-1">1.7.1 Slides</a></li>
+<li><a href="#sec-1-7-2">1.7.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-8">1.8 Summary</a></li>
+<li><a href="#sec-1-9">1.9 A true web application</a>
+<ul>
+<li><a href="#sec-1-9-1">1.9.1 Slides</a></li>
+<li><a href="#sec-1-9-2">1.9.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-10">1.10 Computer says no.</a>
+<ul>
+<li><a href="#sec-1-10-1">1.10.1 Slides</a></li>
+<li><a href="#sec-1-10-2">1.10.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-11">1.11 View Source</a>
+<ul>
+<li><a href="#sec-1-11-1">1.11.1 Slides</a></li>
+<li><a href="#sec-1-11-2">1.11.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-12">1.12 If these are the requirements</a>
+<ul>
+<li><a href="#sec-1-12-1">1.12.1 Slide</a></li>
+<li><a href="#sec-1-12-2">1.12.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-13">1.13 What is state?</a>
+<ul>
+<li><a href="#sec-1-13-1">1.13.1 Slide</a></li>
+<li><a href="#sec-1-13-2">1.13.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-14">1.14 Choosing the wrong data model</a>
+<ul>
+<li><a href="#sec-1-14-1">1.14.1 Slides</a></li>
+<li><a href="#sec-1-14-2">1.14.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-15">1.15 What can let us REST?</a>
+<ul>
+<li><a href="#sec-1-15-1">1.15.1 Slides</a></li>
+<li><a href="#sec-1-15-2">1.15.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-16">1.16 Can JSON let us REST?</a>
+<ul>
+<li><a href="#sec-1-16-1">1.16.1 Slides</a></li>
+<li><a href="#sec-1-16-2">1.16.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-17">1.17 Can CSV let us REST?</a>
+<ul>
+<li><a href="#sec-1-17-1">1.17.1 Slides</a></li>
+<li><a href="#sec-1-17-2">1.17.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-18">1.18 Can XML let us REST?</a>
+<ul>
+<li><a href="#sec-1-18-1">1.18.1 Slides</a></li>
+<li><a href="#sec-1-18-2">1.18.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-19">1.19 Can HTML5 let us REST?</a>
+<ul>
+<li><a href="#sec-1-19-1">1.19.1 Slides</a></li>
+<li><a href="#sec-1-19-2">1.19.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-20">1.20 Can RDFa+HTML5 let us REST?</a>
+<ul>
+<li><a href="#sec-1-20-1">1.20.1 Slides</a></li>
+<li><a href="#sec-1-20-2">1.20.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-21">1.21 Can RDF let us REST?</a>
+<ul>
+<li><a href="#sec-1-21-1">1.21.1 Slides</a></li>
+<li><a href="#sec-1-21-2">1.21.2 Talk</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-22">1.22 A wild Hydra appears!</a>
+<ul>
+<li><a href="#sec-1-22-1">1.22.1 Slides</a></li>
+<li><a href="#sec-1-22-2">1.22.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-23">1.23 Not XML; please god no!</a>
+<ul>
+<li><a href="#sec-1-23-1">1.23.1 Slides</a></li>
+<li><a href="#sec-1-23-2">1.23.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-24">1.24 Triples?</a>
+<ul>
+<li><a href="#sec-1-24-1">1.24.1 Slide</a></li>
+<li><a href="#sec-1-24-2">1.24.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-25">1.25 RDF is a graph 1</a>
+<ul>
+<li><a href="#sec-1-25-1">1.25.1 Slide</a></li>
+<li><a href="#sec-1-25-2">1.25.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-26">1.26 RDF is a graph 2</a>
+<ul>
+<li><a href="#sec-1-26-1">1.26.1 Slide</a></li>
+<li><a href="#sec-1-26-2">1.26.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-27">1.27 Can we finally get some REST?</a>
+<ul>
+<li><a href="#sec-1-27-1">1.27.1 Slide</a></li>
+<li><a href="#sec-1-27-2">1.27.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-28">1.28 JSON-LD</a>
+<ul>
+<li><a href="#sec-1-28-1">1.28.1 Slide</a></li>
+<li><a href="#sec-1-28-2">1.28.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-29">1.29 Linked Data</a>
+<ul>
+<li><a href="#sec-1-29-1">1.29.1 Slides</a></li>
+<li><a href="#sec-1-29-2">1.29.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-30">1.30 Shared Vocabulary</a>
+<ul>
+<li><a href="#sec-1-30-1">1.30.1 Slide</a></li>
+<li><a href="#sec-1-30-2">1.30.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-31">1.31 Shared Vocabulary 2</a>
+<ul>
+<li><a href="#sec-1-31-1">1.31.1 Slide</a></li>
+<li><a href="#sec-1-31-2">1.31.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-32">1.32 Shared Vocabulary 3</a>
+<ul>
+<li><a href="#sec-1-32-1">1.32.1 Slide</a></li>
+<li><a href="#sec-1-32-2">1.32.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-33">1.33 Shared Vocabulary 3</a>
+<ul>
+<li><a href="#sec-1-33-1">1.33.1 slide</a></li>
+<li><a href="#sec-1-33-2">1.33.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-34">1.34 With Linked Data</a>
+<ul>
+<li><a href="#sec-1-34-1">1.34.1 Slide</a></li>
+<li><a href="#sec-1-34-2">1.34.2 Text</a></li>
+</ul>
+</li>
+<li><a href="#sec-1-35">1.35 We can finally get some REST</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> <span class="done DONE">DONE</span> Linked Data and REST</h2>
+<div class="outline-text-2" id="text-1">
+
+
+</div>
+
+<div id="outline-container-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> <span class="done DONE">DONE</span> What is this</h3>
+<div class="outline-text-3" id="text-1-1">
+
+
+<p>
+For those who don't know me, I am Eric Moritz.  
+</p>
+<p>
+I am the architect on the application services team.
+</p>
+<p>
+Application services sit on the public web between our backends and user facing
+applications.
+</p>
+<p>
+Applications such as desktop web, mobile web and native mobile apps.
+</p>
+<p>
+Because of their nature, application services have some very strict requirements.
+</p>
+<p>
+First, we must to be able to iterate as fast as frontend developers
+demand of us.
+</p>
+<p>
+Second, because these services are used by multiple applications, 
+they must evolve without disturbing other applications.
+</p>
+<p>
+These requirements pose a challenge.
+</p>
+<p>
+Current approaches to RESTful services do not meet these requirements.
+</p>
+<p>
+Some research was obviously needed in order to build application services.
+</p>
+<p>
+This talk is my journey meet the requirements of application services.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> <span class="done DONE">DONE</span> A journey through time and space</h3>
+<div class="outline-text-3" id="text-1-2">
+
+
+<p>
+Let me take you on a journey through time and space.  
+</p>
+<p>
+The time? sometime around 2005.  
+</p>
+<p>
+The place, your desk. 
+</p>
+<p>
+You're reading a blog post on RESTful services for the first time.  
+</p>
+<p>
+You read of a grand utopia.
+</p>
+<p>
+One service can drive many user interfaces!  
+</p>
+<p>
+Developers can iterate quickly without disruption!
+</p>
+<p>
+Things just work!  
+</p>
+<p>
+You go to bed that night, finally able to REST 
+</p>
+<p>
+knowing that there is a brave new world coming.
+</p>
+<p>
+Fast forward to today.  
+</p>
+<p>
+We are all building RESTful services.
+</p>
+<p>
+We are in the brave new world. 
+</p>
+<p>
+But this world is more dystopian than utopian. 
+</p>
+<p>
+Servers are tightly coupled to single applications.
+</p>
+<p>
+Developers are stuck with stiff and rigid data formats.
+</p>
+<p>
+We try to REST, but we lose too much sleep over broken software
+and we still dream of a better world.
+</p>
+<p>
+Where did we go wrong? 
+</p>
+<p>
+Lets travel to the time and place were REST was first made public.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> <span class="done DONE">DONE</span> In the year 2000</h3>
+<div class="outline-text-3" id="text-1-3">
+
+
+<p>
+We travel back to the year 2000.
+</p>
+<p>
+Roy T Fielding is publishing his dissertation on the architecture of the world wide web.
+</p>
+<p>
+In his dissertation, he states the requirements of a web application.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> <span class="done DONE">DONE</span> Low Entry-barrier</h3>
+<div class="outline-text-3" id="text-1-4">
+
+
+<p>
+First, there must be a low barrier to entry. 
+</p>
+<p>
+Hypermedia was chosen as the user interface for its simplicity and generality.
+</p>
+<p>
+In order to have a low barrier to entry, the data format must be
+simple.
+</p>
+<p>
+Frontend developers must be able to mock the hypermedia service
+with static files just as easily as they can with HTML.
+</p>
+<p>
+The data format of application services must be general enough to
+drive both native apps and web sites.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> <span class="done DONE">DONE</span> Extensibility</h3>
+<div class="outline-text-3" id="text-1-5">
+
+
+<p>
+If a service is driving both native apps and web sites, the
+technology <b>must</b> be extensible.
+</p>
+<p>
+We must be able to evolve the service without disturbing other user agents.
+</p>
+<p>
+If the mobile app team wants feature X, adding feature X must not
+break desktop web.
+</p>
+<p>
+If we can't do that we are not meeting this requirement of an
+application service.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> <span class="done DONE">DONE</span> Low time to interaction</h3>
+<div class="outline-text-3" id="text-1-6">
+
+
+</div>
+
+<div id="outline-container-1-6-1" class="outline-4">
+<h4 id="sec-1-6-1"><span class="section-number-4">1.6.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-6-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-6-2" class="outline-4">
+<h4 id="sec-1-6-2"><span class="section-number-4">1.6.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-6-2">
+
+
+<p>
+Because the service is driving the user interface, the time to
+interaction must be low.
+</p>
+<p>
+Research has shown that if the time to interaction is greater than
+250ms the interface feels laggy.
+</p>
+<p>
+If an application can not meet this requirement it is not a fun web
+application.
+</p>
+<p>
+250ms is the time to interaction but services must deliver payloads
+much faster than that.
+</p>
+<p>
+The application services team must monitor the latency of the network,
+the backend, the application service and the time to interaction.
+</p>
+<p>
+The application services team must place strict SLAs on the 95 and 99
+percentiles of each component of the stack.
+</p>
+<p>
+If these SLAs are violated the owner of the stack component must be
+notified.
+</p>
+<p>
+In addition, application services and clients must use HTTP caching
+effectively and correctly.
+</p>
+<p>
+HTTP caching must be as invisible to the developer as it is to a
+user.
+</p>
+<p>
+If we use caching and conditional GETs correctly, caching in
+applications become simple.
+</p>
+<p>
+Client developers will no longer need to worry about caching because
+their libraries will do it for them.
+</p>
+<p>
+When service implementors use HTTP caching correctly with conditional
+GETs we can cut down on unnecessary processing and wasted bandwidth.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> <span class="done DONE">DONE</span> Internet-scale</h3>
+<div class="outline-text-3" id="text-1-7">
+
+
+</div>
+
+<div id="outline-container-1-7-1" class="outline-4">
+<h4 id="sec-1-7-1"><span class="section-number-4">1.7.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-7-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-7-2" class="outline-4">
+<h4 id="sec-1-7-2"><span class="section-number-4">1.7.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-7-2">
+
+<p>Finally; a web application must be Internet scale.  
+</p>
+<p>
+Anarchic scalability means that we can share data in a distributed system.
+</p>
+<p>
+Anarchic scalability requires using global identifiers for objects and 
+property names.
+</p>
+<p>
+If we use global identifiers for objects and property names we can
+share data between the backend, application services and client
+applications regardless of how large.
+</p>
+<p>
+Independent Deployment means we can scale and deploy clients and
+servers independently.
+</p>
+<p>
+If we meet the requirement of independent deployment, frontend developers can
+work with mocked data independently of service implementors.
+</p>
+<p>
+To have Independent Deployment we must use a common language to
+communicate. 
+</p>
+<p>
+The common language of Web applications is HTML.
+</p>
+<p>
+Web browsers and web sites can be deployed independently because they
+use HTML.
+</p>
+<p>
+However, native applications need more.
+</p>
+<p>
+In order to drive native and web applications, application services
+need to a global hypermedia based language.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> <span class="done DONE">DONE</span> Summary</h3>
+<div class="outline-text-3" id="text-1-8">
+
+
+<p>
+These are the requirements of a web application.  They are also the
+requirements of an application service.
+</p>
+<p>
+If we want to meet these requirements, what do we have to do?
+</p>
+<p>
+Lets examine a how a web application met these four requirements even
+in the year 2000.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> <span class="done DONE">DONE</span> A true web application</h3>
+<div class="outline-text-3" id="text-1-9">
+
+
+</div>
+
+<div id="outline-container-1-9-1" class="outline-4">
+<h4 id="sec-1-9-1"><span class="section-number-4">1.9.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-9-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-9-2" class="outline-4">
+<h4 id="sec-1-9-2"><span class="section-number-4">1.9.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-9-2">
+
+<p>HTML was built from the ground up to meet these four requirements.
+</p>
+<p>
+How does HTML drive the user interface of multiple devices?
+</p>
+<p>
+Let us become the user. 
+</p>
+<p>
+First I want to browse stories about "Life, the Universe and
+Everything".
+</p>
+<p>
+So I tap on the life section link.
+</p>
+<p>
+The link transforms me into a user that is now browsing the life section.
+</p>
+<p>
+Immediately I say, "OMG Katy Perry" and tap on Katy Perry's face.
+</p>
+<p>
+The link transforms me into a user that is now reading a story
+about Katy Perry delivering a baby in someone's living room.
+</p>
+<p>
+This is how HTML, the hypertext markup language, uses hypermedia
+to drive the user interface.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> <span class="done DONE">DONE</span> Computer says no.</h3>
+<div class="outline-text-3" id="text-1-10">
+
+
+</div>
+
+<div id="outline-container-1-10-1" class="outline-4">
+<h4 id="sec-1-10-1"><span class="section-number-4">1.10.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-10-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-10-2" class="outline-4">
+<h4 id="sec-1-10-2"><span class="section-number-4">1.10.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-10-2">
+
+<p>Unfortunately this service can only drive HTML browsers.  
+</p>
+<p>
+If we wanted to use this service to drive a mobile app, 
+we would have to use a WebView.
+</p>
+<p>
+The native app only sees links between HTML documents.
+</p>
+<p>
+The native app has no knowledge of how to 
+turn the sections and stories into native components.
+</p>
+<p>
+This knowledge would have to be  hard coded into the app.
+</p>
+<p>
+When knowledge is hardcoded it becomes tightly coupled to the
+structure of the HTML.
+</p>
+<p>
+So, what do we need?
+</p>
+<p>
+Lets travel to the future and view source on an application
+that can drive both web sites and native applications.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-11" class="outline-3">
+<h3 id="sec-1-11"><span class="section-number-3">1.11</span> <span class="done DONE">DONE</span> View Source</h3>
+<div class="outline-text-3" id="text-1-11">
+
+
+</div>
+
+<div id="outline-container-1-11-1" class="outline-4">
+<h4 id="sec-1-11-1"><span class="section-number-4">1.11.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-11-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-11-2" class="outline-4">
+<h4 id="sec-1-11-2"><span class="section-number-4">1.11.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-11-2">
+
+
+<p>
+Be honored, by traveling to the future, you may be the 
+first person in history to see this.
+</p>
+<p>
+In our time, we've heard legends of services like this.
+</p>
+<p>
+Now, for the first time, we have documented proof of a future service
+that can do things that seem impossible in our time.
+</p>
+<p>
+We have a service that can drive both web sites <b>and</b> native applications.
+</p>
+<p>
+What you see here is the raw data needed for each user state.
+</p>
+<p>
+This raw data still has hypermedia links between the states so
+a user can transition from one state to the other.
+</p>
+<p>
+The raw data is typed with classes that the native application can use
+to create native UI components
+</p>
+<p>
+With this service we can drive desktop web, mobile web, mobile apps
+and any future user agents.  
+</p>
+<p>
+For instance, we could use this same service to build a TV app.  It
+is the same interactions but a different presentation.
+</p>
+<p>
+We could even use this service with an in dash system like Ford Sync.
+</p>
+<p>
+Again, same interactions, just a different presentation.
+</p>
+<p>
+We could even use this service to print a newspaper, A newspaper has
+the same interaction model albeit on dead trees. 
+</p>
+<p>
+Of course, in the future, this service does not drive such
+applications
+</p>
+<p>
+because TVs, cars and newspapers have been made obsolete by superior RESTful
+services.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-12" class="outline-3">
+<h3 id="sec-1-12"><span class="section-number-3">1.12</span> <span class="done DONE">DONE</span> If these are the requirements</h3>
+<div class="outline-text-3" id="text-1-12">
+
+
+</div>
+
+<div id="outline-container-1-12-1" class="outline-4">
+<h4 id="sec-1-12-1"><span class="section-number-4">1.12.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-12-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-12-2" class="outline-4">
+<h4 id="sec-1-12-2"><span class="section-number-4">1.12.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-12-2">
+
+<p>Now back to our current time. 
+</p>
+<p>
+If these are the requirements of this brave new world.
+</p>
+<p>
+How can we make progress towards this future.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-13" class="outline-3">
+<h3 id="sec-1-13"><span class="section-number-3">1.13</span> <span class="done DONE">DONE</span> What is state?</h3>
+<div class="outline-text-3" id="text-1-13">
+
+
+</div>
+
+<div id="outline-container-1-13-1" class="outline-4">
+<h4 id="sec-1-13-1"><span class="section-number-4">1.13.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-13-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-13-2" class="outline-4">
+<h4 id="sec-1-13-2"><span class="section-number-4">1.13.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-13-2">
+
+
+<p>
+The first thing we need to do is use the right definition
+of "state".
+</p>
+<p>
+When developers see the word "state" they immediately think data. So
+the industry assigned URLs to data and thought they were done.
+</p>
+<p>
+The definition of state in hypermedia is the state the user is in when
+using our application. Hypermedia is just a site map.
+</p>
+<p>
+So when developers misunderstand the definition of state, 
+</p>
+<p>
+we misunderstood the importance of hypermedia 
+and we ended up just having CRUD over HTTP and not REST.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-14" class="outline-3">
+<h3 id="sec-1-14"><span class="section-number-3">1.14</span> <span class="done DONE">DONE</span> Choosing the wrong data model</h3>
+<div class="outline-text-3" id="text-1-14">
+
+
+</div>
+
+<div id="outline-container-1-14-1" class="outline-4">
+<h4 id="sec-1-14-1"><span class="section-number-4">1.14.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-14-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-14-2" class="outline-4">
+<h4 id="sec-1-14-2"><span class="section-number-4">1.14.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-14-2">
+
+<p>The second thing the we need is a better data model.
+</p>
+<p>
+Clearly we need a way to express data that is independent of the
+service's chosen format.
+</p>
+<p>
+Just as before with our HTML service, when knowledge has to be hard
+coded into the app, the app becomes tightly coupled to structure of
+the data model.
+</p>
+<p>
+JSON and XML are both tree based data models.  
+</p>
+<p>
+The object relationships are based on the shape of the tree. 
+</p>
+<p>
+This means that clients are tightly coupled to the structure of the tree.
+</p>
+<p>
+If a service needs to add a relationship between two objects 
+it may drastically reshape the tree.
+</p>
+<p>
+If the structure of the tree drastically changes and the app is
+tightly coupled to the previous structure, the app will break.
+</p>
+<p>
+We also need a global data model.
+</p>
+<p>
+We need a data model that uses global identifiers for objects and
+terms.
+</p>
+<p>
+We need global identifiers in order to shared data in a distributed
+system such as a client and server.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-15" class="outline-3">
+<h3 id="sec-1-15"><span class="section-number-3">1.15</span> <span class="done DONE">DONE</span> What can let us REST?</h3>
+<div class="outline-text-3" id="text-1-15">
+
+
+</div>
+
+<div id="outline-container-1-15-1" class="outline-4">
+<h4 id="sec-1-15-1"><span class="section-number-4">1.15.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-15-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-15-2" class="outline-4">
+<h4 id="sec-1-15-2"><span class="section-number-4">1.15.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-15-2">
+
+
+<p>
+Armed with the requirements of a web application and our new found
+knowledge of a service from the future.
+</p>
+<p>
+Can we meet these requirements with existing tools?
+</p>
+<p>
+What can let us REST? 
+</p>
+<p>
+What can drive native and web user agents, evolve effortlessly, be
+responsive, and function at Internet scale?
+</p>
+<p>
+Let us examine different approaches and assign gold stars to the
+requirements that are met.  If we get all four gold stars, we have found
+our solution.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-16" class="outline-3">
+<h3 id="sec-1-16"><span class="section-number-3">1.16</span> <span class="done DONE">DONE</span> Can JSON let us REST?</h3>
+<div class="outline-text-3" id="text-1-16">
+
+
+</div>
+
+<div id="outline-container-1-16-1" class="outline-4">
+<h4 id="sec-1-16-1"><span class="section-number-4">1.16.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-16-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-16-2" class="outline-4">
+<h4 id="sec-1-16-2"><span class="section-number-4">1.16.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-16-2">
+
+<p>Can JSON let us REST?
+</p>
+<p>
+Can it drive both native and web user agents?
+</p>
+<p>
+JSON has no native ability to control any device, so nope.
+</p>
+<p>
+Can the service evolve? 
+</p>
+<p>
+It can evolve in a limited way. We can add fields easily to the
+objects but because it is tree based, we can't easily change
+relationships between objects.
+</p>
+<p>
+Is the UI responsive?  
+</p>
+<p>
+Sure, but this is the participation award. HTTP gives us caching for
+free. If we can download the objects in a single request we
+get this star.
+</p>
+<p>
+Is it web scale? 
+</p>
+<p>
+No, the field names are local to the document.
+</p>
+<p>
+If the tree is such a problem&hellip; let us take a cue from SQL and normalize. Let's try&hellip;
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-17" class="outline-3">
+<h3 id="sec-1-17"><span class="section-number-3">1.17</span> <span class="done DONE">DONE</span> Can CSV let us REST?</h3>
+<div class="outline-text-3" id="text-1-17">
+
+
+</div>
+
+<div id="outline-container-1-17-1" class="outline-4">
+<h4 id="sec-1-17-1"><span class="section-number-4">1.17.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-17-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-17-2" class="outline-4">
+<h4 id="sec-1-17-2"><span class="section-number-4">1.17.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-17-2">
+
+<p>CSV.
+</p>
+<p>
+CSV obviously is not hypermedia, so no star there.
+</p>
+<p>
+Can the service evolve? 
+</p>
+<p>
+Yes it actually can evolve quite nicely.  
+</p>
+<p>
+We can add fields to the right without disrupting existing clients.
+</p>
+<p>
+We can even add new relationships between objects without disrupting
+existing clients. 
+</p>
+<p>
+Gold star for extensibility.
+</p>
+<p>
+Is the UI responsive?  
+</p>
+<p>
+No, because there are two different files.
+</p>
+<p>
+We have to make two HTTP requests to fetch them.
+</p>
+<p>
+This is additional network latency.
+</p>
+<p>
+Is it web scale? 
+</p>
+<p>
+Nope.  The field names are local.  
+</p>
+<p>
+They're even local to the files.
+</p>
+<p>
+The author id is called "id" in the author table but it is called
+"author<sub>id</sub>" in the story table.
+</p>
+<p>
+Even within these two files there are two names for the same concept.
+</p>
+<p>
+So CSV is out, what else&hellip;
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-18" class="outline-3">
+<h3 id="sec-1-18"><span class="section-number-3">1.18</span> <span class="done DONE">DONE</span> Can XML let us REST?</h3>
+<div class="outline-text-3" id="text-1-18">
+
+
+</div>
+
+<div id="outline-container-1-18-1" class="outline-4">
+<h4 id="sec-1-18-1"><span class="section-number-4">1.18.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-18-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-18-2" class="outline-4">
+<h4 id="sec-1-18-2"><span class="section-number-4">1.18.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-18-2">
+
+<p>XML, the extensible markup language.  The savior of data exchange.
+</p>
+<p>
+Can we drive the user interface? 
+</p>
+<p>
+Nope, no hypermedia in plain XML
+</p>
+<p>
+Can the service evolve?
+</p>
+<p>
+It is called the extensible markup language after all,
+</p>
+<p>
+but it is as extensible as JSON is.  
+</p>
+<p>
+We can add fields as much as we want. 
+</p>
+<p>
+However it is tree based as well, so the structure is rigid.
+</p>
+<p>
+Is the UI responsive?
+</p>
+<p>
+Sure, you get the participation award, good job XML.
+</p>
+<p>
+Is it web scale? 
+</p>
+<p>
+Finally we have a format that is web scale. 
+</p>
+<p>
+All the tags are namespaced, so they have global identifiers.  
+</p>
+<p>
+We can also deploy client and servers independently because of XML
+schemas.
+</p>
+<p>
+Almost there, lets try to find the last one and a half stars somewhere.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-19" class="outline-3">
+<h3 id="sec-1-19"><span class="section-number-3">1.19</span> <span class="done DONE">DONE</span> Can HTML5 let us REST?</h3>
+<div class="outline-text-3" id="text-1-19">
+
+
+</div>
+
+<div id="outline-container-1-19-1" class="outline-4">
+<h4 id="sec-1-19-1"><span class="section-number-4">1.19.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-19-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-19-2" class="outline-4">
+<h4 id="sec-1-19-2"><span class="section-number-4">1.19.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-19-2">
+
+<p>The solution to XML's complexity, HTML5, can we use it to finally get
+some REST?
+</p>
+<p>
+Can we drive user agents? 
+</p>
+<p>
+Well it is a hypertext markup language. Unfortunately we can only
+drive HTML agents.
+</p>
+<p>
+Can the service evolve? 
+</p>
+<p>
+Again, a tree based structure, half a star.
+</p>
+<p>
+Is it web scale?  
+</p>
+<p>
+We actually lost this star because the field names of the HTML5 data
+properties are local again.
+</p>
+<p>
+Crap, we last half a star; Lets keep the hypermedia and try one of
+those microdata things:
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-20" class="outline-3">
+<h3 id="sec-1-20"><span class="section-number-3">1.20</span> <span class="done DONE">DONE</span> Can RDFa+HTML5 let us REST?</h3>
+<div class="outline-text-3" id="text-1-20">
+
+
+</div>
+
+<div id="outline-container-1-20-1" class="outline-4">
+<h4 id="sec-1-20-1"><span class="section-number-4">1.20.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-20-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-20-2" class="outline-4">
+<h4 id="sec-1-20-2"><span class="section-number-4">1.20.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-20-2">
+
+
+<p>
+RDFa+HTML5, can this let us REST?
+</p>
+<p>
+Can we drive multiple user agents? 
+</p>
+<p>
+Yes! We have both raw data and hypermedia links, so gold star.
+</p>
+<p>
+Can the service evolve? 
+</p>
+<p>
+Yes, the data model is no longer tree based. The RDF data model is
+graph based, we can freely add properties and relationships to objects
+without disrupting other clients
+</p>
+<p>
+Is the UI responsive? 
+</p>
+<p>
+Many objects in one HTTP response, check.
+</p>
+<p>
+Is it web scale? 
+</p>
+<p>
+Can we share data globally?
+</p>
+<p>
+Yes, the property names are global URIs
+</p>
+<p>
+Can we deploy the client and server independently? 
+</p>
+<p>
+Yes, RDF has vocabularies which can be the basis of independant
+development.
+</p>
+<p>
+We have our 4 stars, but can do use RDF without HTML5?
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-21" class="outline-3">
+<h3 id="sec-1-21"><span class="section-number-3">1.21</span> <span class="done DONE">DONE</span> Can RDF let us REST?</h3>
+<div class="outline-text-3" id="text-1-21">
+
+
+</div>
+
+<div id="outline-container-1-21-1" class="outline-4">
+<h4 id="sec-1-21-1"><span class="section-number-4">1.21.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-21-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-21-2" class="outline-4">
+<h4 id="sec-1-21-2"><span class="section-number-4">1.21.2</span> <span class="done DONE">DONE</span> Talk</h4>
+<div class="outline-text-4" id="text-1-21-2">
+
+
+<p>
+If we get rid of HTML, Can we drive the UI with RDF?
+</p>
+<p>
+We lost links but all the rest is still there. Can we put Links back
+somehow?
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-22" class="outline-3">
+<h3 id="sec-1-22"><span class="section-number-3">1.22</span> <span class="done DONE">DONE</span> A wild Hydra appears!</h3>
+<div class="outline-text-3" id="text-1-22">
+
+
+</div>
+
+<div id="outline-container-1-22-1" class="outline-4">
+<h4 id="sec-1-22-1"><span class="section-number-4">1.22.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-22-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-22-2" class="outline-4">
+<h4 id="sec-1-22-2"><span class="section-number-4">1.22.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-22-2">
+
+<p>Absolutely! Hydra is a vocabulary for RDF that lets us describe
+a hypermedia driven service.
+</p>
+<p>
+We can use Hydra to both drive HTML applications and native
+applications. We win.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-23" class="outline-3">
+<h3 id="sec-1-23"><span class="section-number-3">1.23</span> <span class="done DONE">DONE</span> Not XML; please god no!</h3>
+<div class="outline-text-3" id="text-1-23">
+
+
+</div>
+
+<div id="outline-container-1-23-1" class="outline-4">
+<h4 id="sec-1-23-1"><span class="section-number-4">1.23.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-23-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-23-2" class="outline-4">
+<h4 id="sec-1-23-2"><span class="section-number-4">1.23.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-23-2">
+
+<p>But isn't RDF XML? 
+</p>
+<p>
+Actually RDF is just a data model.  Saying RDF is XML is like saying
+a tree is XML.
+</p>
+<p>
+XML is just one way to serialize RDF.  So what is RDF then?
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-24" class="outline-3">
+<h3 id="sec-1-24"><span class="section-number-3">1.24</span> <span class="done DONE">DONE</span> Triples?</h3>
+<div class="outline-text-3" id="text-1-24">
+
+
+</div>
+
+<div id="outline-container-1-24-1" class="outline-4">
+<h4 id="sec-1-24-1"><span class="section-number-4">1.24.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-24-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-24-2" class="outline-4">
+<h4 id="sec-1-24-2"><span class="section-number-4">1.24.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-24-2">
+
+<p>RDF is simply statements made about objects.  These statements are
+often called triples.
+</p>
+<p>
+They are made up of a subject, a predicate and an object just like an
+English sentence.  So when I say, "Eric has a bike", "Eric" is the
+subject, "has" is the predicate and "a bike" is the object.
+</p>
+<p>
+The subject and predicate are always global URIs.  The object can
+either be a URI, with establishes a relationship to another object or data such as
+a string.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-25" class="outline-3">
+<h3 id="sec-1-25"><span class="section-number-3">1.25</span> <span class="done DONE">DONE</span> RDF is a graph 1</h3>
+<div class="outline-text-3" id="text-1-25">
+
+
+</div>
+
+<div id="outline-container-1-25-1" class="outline-4">
+<h4 id="sec-1-25-1"><span class="section-number-4">1.25.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-25-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-25-2" class="outline-4">
+<h4 id="sec-1-25-2"><span class="section-number-4">1.25.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-25-2">
+
+<p>So these statement build an RDF graph.  The RDF graph is a directed
+graph that uses URI as its identifiers.
+</p>
+<p>
+The good thing about a graph is that relationships can be added
+without drastically changing the shape of the graph. 
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-26" class="outline-3">
+<h3 id="sec-1-26"><span class="section-number-3">1.26</span> <span class="done DONE">DONE</span> RDF is a graph 2</h3>
+<div class="outline-text-3" id="text-1-26">
+
+
+</div>
+
+<div id="outline-container-1-26-1" class="outline-4">
+<h4 id="sec-1-26-1"><span class="section-number-4">1.26.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-26-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-26-2" class="outline-4">
+<h4 id="sec-1-26-2"><span class="section-number-4">1.26.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-26-2">
+
+<p>We just added a gannett:state relationship and the graph was
+mostly undisturbed.
+</p>
+<p>
+RDF also has the benefit of being normalized.  
+</p>
+<p>
+In JSON if we had two stories with the same author, that author object
+would be duplicated. This is not the case with RDF.
+</p>
+<p>
+This will reduce payload sizes and save us money.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-27" class="outline-3">
+<h3 id="sec-1-27"><span class="section-number-3">1.27</span> <span class="done DONE">DONE</span> Can we finally get some REST?</h3>
+<div class="outline-text-3" id="text-1-27">
+
+
+</div>
+
+<div id="outline-container-1-27-1" class="outline-4">
+<h4 id="sec-1-27-1"><span class="section-number-4">1.27.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-27-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-27-2" class="outline-4">
+<h4 id="sec-1-27-2"><span class="section-number-4">1.27.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-27-2">
+
+<p>So with the addition of Hydra, We can drive multiple user agents with
+a standard shared vocabulary.
+</p>
+<p>
+In additon, the RDF data model is extremely simple to understand.  
+</p>
+<p>
+It is just statements about objects. 
+</p>
+<p>
+If we understand the web, we understand graphs.
+</p>
+<p>
+So we have all four stars but we are just talking about a data model, not a data format.
+</p>
+<p>
+We could use XML to serialize the graph but that requires clients to use RDF.
+</p>
+<p>
+Is there a middle ground?
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-28" class="outline-3">
+<h3 id="sec-1-28"><span class="section-number-3">1.28</span> <span class="done DONE">DONE</span> JSON-LD</h3>
+<div class="outline-text-3" id="text-1-28">
+
+
+</div>
+
+<div id="outline-container-1-28-1" class="outline-4">
+<h4 id="sec-1-28-1"><span class="section-number-4">1.28.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-28-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-28-2" class="outline-4">
+<h4 id="sec-1-28-2"><span class="section-number-4">1.28.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-28-2">
+
+<p>I wouldn't be asking that question if I didn't have an answers would I?
+</p>
+<p>
+JSON-LD is a middle ground between using RDF natively and JSON idomatically.
+</p>
+<p>
+With JSON-LD we can serialize an RDF graph, with all its wonderful properties,
+</p>
+<p>
+or we can use JSON-LD as idomatic JSON for clients that are unaware of RDF.
+</p>
+<p>
+This is great for retrofitting existing services without disturbing existing clients.
+</p>
+<p>
+Using JSON-LD meets the requirement of safe evolution while adopting
+Linked Data.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-29" class="outline-3">
+<h3 id="sec-1-29"><span class="section-number-3">1.29</span> <span class="done DONE">DONE</span> Linked Data</h3>
+<div class="outline-text-3" id="text-1-29">
+
+
+</div>
+
+<div id="outline-container-1-29-1" class="outline-4">
+<h4 id="sec-1-29-1"><span class="section-number-4">1.29.1</span> <span class="done DONE">DONE</span> Slides</h4>
+<div class="outline-text-4" id="text-1-29-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-29-2" class="outline-4">
+<h4 id="sec-1-29-2"><span class="section-number-4">1.29.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-29-2">
+
+<p>So I have referred to Linked Data without actually defining it.
+</p>
+<p>
+A fairly recent development in RDF is the concept of linked data.
+</p>
+<p>
+Linked data is a set of constraints on RDF.
+</p>
+<p>
+These benevolent constraints were made to foster sharing and documentation
+</p>
+<p>
+While the goal is to build a large global database in the cloud; 
+</p>
+<p>
+we can use the same ideas internally in our own services and reap the same
+benefits.
+</p>
+<p>
+We use HTTP links for terms that point to the definition of that term.
+</p>
+<p>
+For instance, if you visit <a href="http://schema.org/Thing">http://schema.org/Thing</a> you will see the
+definition of the class Thing.
+</p>
+<p>
+This definition is both machine readable and human readable.
+</p>
+<p>
+When building an RDF vocabulary, we specify it in RDF itself.
+</p>
+<p>
+We can use this RDF graph to generate human readable documentation.
+</p>
+<p>
+Another term I have failed to define up to now is the meaning of a
+"Shared Vocabulary"; let me try to explain it.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-30" class="outline-3">
+<h3 id="sec-1-30"><span class="section-number-3">1.30</span> <span class="done DONE">DONE</span> Shared Vocabulary</h3>
+<div class="outline-text-3" id="text-1-30">
+
+
+</div>
+
+<div id="outline-container-1-30-1" class="outline-4">
+<h4 id="sec-1-30-1"><span class="section-number-4">1.30.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-30-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-30-2" class="outline-4">
+<h4 id="sec-1-30-2"><span class="section-number-4">1.30.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-30-2">
+
+<p>Did you know what a meme was when you first saw the word?  
+</p>
+<p>
+Did you even know how to pronounce it?  
+</p>
+<p>
+Did you call a me-me or a mem?
+</p>
+<p>
+You had to google it didn't you?  
+</p>
+<p>
+Once you googled it you learned what a meme was.
+</p>
+<p>
+Once you learned what a meme was you could talk about memes
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-31" class="outline-3">
+<h3 id="sec-1-31"><span class="section-number-3">1.31</span> <span class="done DONE">DONE</span> Shared Vocabulary 2</h3>
+<div class="outline-text-3" id="text-1-31">
+
+
+</div>
+
+<div id="outline-container-1-31-1" class="outline-4">
+<h4 id="sec-1-31-1"><span class="section-number-4">1.31.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-31-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-31-2" class="outline-4">
+<h4 id="sec-1-31-2"><span class="section-number-4">1.31.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-31-2">
+
+<p>You could talk on Reddit about memes without soundly like an idiot.
+</p>
+<p>
+Not sounding like an idiot is an important thing.
+</p>
+<p>
+Computers need to not sound like idiots too.
+</p>
+<p>
+Computers need to use shared vocabularies
+</p>
+<p>
+Because if computers sound like idiots, they crash.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-32" class="outline-3">
+<h3 id="sec-1-32"><span class="section-number-3">1.32</span> <span class="done DONE">DONE</span> Shared Vocabulary 3</h3>
+<div class="outline-text-3" id="text-1-32">
+
+
+</div>
+
+<div id="outline-container-1-32-1" class="outline-4">
+<h4 id="sec-1-32-1"><span class="section-number-4">1.32.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-32-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-32-2" class="outline-4">
+<h4 id="sec-1-32-2"><span class="section-number-4">1.32.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-32-2">
+
+<p>A shared vocabulary is a set of properties and classes that define a
+problem domain.
+</p>
+<p>
+In the previous slide we used a schema.org vocabulary.
+</p>
+<p>
+schema.org is a collection of very general terms that make up a common
+shared vocabulary.
+</p>
+<p>
+There are a lot of public vocabularies out there.  
+</p>
+<p>
+A site called Linked Open Vocabularies has indexed over 400 public
+vocabularies.
+</p>
+<p>
+These are vocabularies that we can use when they match our problem
+domain.
+</p>
+<p>
+Public vocabularies are extremely important.
+</p>
+<p>
+They are important for the same reason why a common language is
+important.
+</p>
+<p>
+If we didn't have a common language, we'd live in the Tower of Babel.
+</p>
+<p>
+Without shared vocabularies we build distributed systems of Babel,
+full of confusion.
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-33" class="outline-3">
+<h3 id="sec-1-33"><span class="section-number-3">1.33</span> <span class="done DONE">DONE</span> Shared Vocabulary 3</h3>
+<div class="outline-text-3" id="text-1-33">
+
+
+</div>
+
+<div id="outline-container-1-33-1" class="outline-4">
+<h4 id="sec-1-33-1"><span class="section-number-4">1.33.1</span> <span class="done DONE">DONE</span> slide</h4>
+<div class="outline-text-4" id="text-1-33-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-33-2" class="outline-4">
+<h4 id="sec-1-33-2"><span class="section-number-4">1.33.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-33-2">
+
+<p>Lets build a vocabulary to describe objects in our most popular
+feed.
+</p>
+<p>
+First, we start with a public vocabulary.  We start with schema.org's
+CreativeWork class.
+</p>
+<p>
+Schema.org's CreativeWork class has everything we need to talk about
+any object in the most popular feed.
+</p>
+<p>
+All we have to do is define what is unique to our problem domain.  
+</p>
+<p>
+We define a gannett:Asset class which has an 'ssts' property.
+</p>
+<p>
+You'll notice that the "Right Now" feed is a hetrogenious list of
+assets.
+</p>
+<p>
+These assets can be videos, stories, photos, or some future unknown
+type.
+</p>
+<p>
+As long as all objects in the right now feed are schema:CreativeWork
+instances, 
+</p>
+<p>
+we can display it with its image and title without making any change
+to the template.
+</p>
+<p>
+This is very powerful. 
+</p>
+<p>
+In native application this is necessary if we want a library of
+generic GUI controls.
+</p>
+<p>
+For instance a ObjectiveC developers can make a control that is a
+generic list of schema:CreativeWork objects.
+</p>
+<p>
+These list controls are future proofed by the fact that all objects in
+the feed will always be schema:CreativeWork objects. 
+</p>
+<p>
+For safety sake, if any object in the feed is not of type
+schema:CreativeWork the client should ignore it just like an HTML
+browser ignores unknown tags.
+</p>
+<p>
+This is incredible, this is amazing.  This is the freaking future and
+it is 10 years old. Why are we not using it now?
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-34" class="outline-3">
+<h3 id="sec-1-34"><span class="section-number-3">1.34</span> <span class="done DONE">DONE</span> With Linked Data</h3>
+<div class="outline-text-3" id="text-1-34">
+
+
+</div>
+
+<div id="outline-container-1-34-1" class="outline-4">
+<h4 id="sec-1-34-1"><span class="section-number-4">1.34.1</span> <span class="done DONE">DONE</span> Slide</h4>
+<div class="outline-text-4" id="text-1-34-1">
+
+</div>
+
+</div>
+
+<div id="outline-container-1-34-2" class="outline-4">
+<h4 id="sec-1-34-2"><span class="section-number-4">1.34.2</span> <span class="done DONE">DONE</span> Text</h4>
+<div class="outline-text-4" id="text-1-34-2">
+
+<p>I hope I was successful in expressing how important Linked Data is
+for building RESTful services.
+</p>
+<p>
+Linked Data lets us communicate about our data with clarity.
+</p>
+<p>
+We can describe the properties of our objects in certain terms.
+</p>
+<p>
+With JSON-LD we can retrofit existing services without disturbing
+existing clients.
+</p>
+<p>
+With global graphs we have the ability to evolve services safely.
+</p>
+<p>
+And finally with Hydra, we can describe hypermedia services in the
+clear language of linked data to drive any user agent.
+</p>
+<p>
+If I accomplished anything with this talk,
+</p>
+<p>
+I hope that I convince you to at least retrofit your services with JSON-LD
+</p>
+<p>
+So that you can give meaning to meaningless services
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-1-35" class="outline-3">
+<h3 id="sec-1-35"><span class="section-number-3">1.35</span> <span class="done DONE">DONE</span> We can finally get some REST</h3>
+<div class="outline-text-3" id="text-1-35">
+
+<p>and we can finally get <b>some</b> REST. Thank you.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="postamble">
+<p class="date">Date: 2014-03-03T21:45-0500</p>
+<p class="author">Author: Moritz</p>
+<p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
+<a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

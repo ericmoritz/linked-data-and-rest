@@ -1,4 +1,4 @@
-What story to I want to tell?
+Linked Data and REST part 1
 * DONE Linked Data and REST
   CLOCK: [2014-03-03 Mon 19:47]--[2014-03-03 Mon 20:00] =>  0:13
   CLOCK: [2014-03-03 Mon 18:46]--[2014-03-03 Mon 19:11] =>  0:25

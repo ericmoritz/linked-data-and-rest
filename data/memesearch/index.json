@@ -1,0 +1,67 @@
+{
+  "@context": {
+    "meme": "http://example.com/vocab/meme#", 
+    "search": "meme:search", 
+    "@vocab": "http://www.w3.org/ns/hydra/core#", 
+    "title": "schema:title", 
+    "recent": "meme:recent", 
+    "schema": "http://schema.org/"
+  }, 
+  "@graph": [
+    {
+      "search": {
+        "@id": "_:b1", 
+        "@type": [
+          "IriTemplate", 
+          "meme:SearchTemplate"
+        ], 
+        "template": {
+          "@id": "http://example.com/search{?q}"
+        }, 
+        "mapping": {
+          "variable": "q", 
+          "property": {
+            "@id": "http://www.w3.org/ns/hydra/core#freetextQuery"
+          }, 
+          "@id": "_:b2", 
+          "@type": "IriTemplateMapping"
+        }
+      }, 
+      "title": {
+        "@value": "Meme Search", 
+        "@language": "en"
+      }, 
+      "@id": "http://example.com/", 
+      "@type": [
+        "Resource", 
+        "schema:WebPage", 
+        "meme:IndexPage", 
+        "EntryPoint"
+      ], 
+      "recent": {
+        "member": [
+          {
+            "@id": "http://example.com/8WcPWyY"
+          }, 
+          {
+            "schema:image": {
+              "@id": "http://example.com/6urDWca.png"
+            }, 
+            "@id": "http://example.com/6urDWca", 
+            "@type": [
+              "meme:Meme", 
+              "Link", 
+              "meme:RecentMeme", 
+              "schema:CreativeWork"
+            ]
+          }, 
+          {
+            "@id": "http://example.com/invents-rdf"
+          }
+        ], 
+        "@id": "_:b0", 
+        "@type": "Collection"
+      }
+    }
+  ]
+}

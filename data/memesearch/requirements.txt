@@ -1,0 +1,4 @@
+pyld
+rdflib==4.1.0
+-e git+https://github.com/RDFLib/rdflib-jsonld.git@e5c4b5f6f4de1e79c93503c0b28d87934a674da1#egg=rdflib_jsonld-master
+-e git+https://github.com/edsu/rdflib-microdata.git@2b2eb632a3407bf889d03e1c3dde8657d56c5c6e#egg=rdflib_microdata-master

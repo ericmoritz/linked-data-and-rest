@@ -1,0 +1,14 @@
+{
+    "@context": {
+	"@vocab": "http://www.w3.org/ns/hydra/core#",
+	"meme": "http://example.com/vocab/meme#",
+	"schema": "http://schema.org/",
+	"search": "meme:search",
+	"recent": "meme:recent",
+	"title": "schema:title"
+    },
+    "@type": "meme:IndexPage",
+    "search": {
+	"@type": "meme:SearchTemplate"
+    }
+}

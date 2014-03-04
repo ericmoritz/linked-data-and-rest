@@ -1,0 +1,21 @@
+{
+  "@id": "/story/43",
+  "author": {
+    "@id": "/person/54",
+    "firstName": "Eric",
+    "lastName": "Moritz",
+    "state": {
+      "@id": "/state/va",
+      "name": "Virginia" 
+    }
+  },
+  "@context": {
+    "gannett": "http://api.gannett.com/vocab/core#",
+    "story": {"@id": "gannett:story", "@type": "gannett:Story"},
+    "author":{"@id": "gannett:author", "@type": "gannett:Person"},
+    "state": {"@id": "gannett:state", "@type": "gannett:State"},
+    "firstName": "gannett:firstName",
+    "lastName":  "gannett:lastName",
+    "name":      "gannett:name"
+  }
+}

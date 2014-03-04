@@ -1,0 +1,13 @@
+
+@prefix gannett: <http://api.gannett.com/vocab/core#> .
+
+
+<./>  gannett:author <./person.ttl> .
+
+<./person.ttl> 
+    gannett:firstName> "Eric" ;
+    gannett:lastName  "Moritz" ;
+    gannett:state  <./state-va.ttl> .
+
+
+<./state.ttl>  gannett:name "Virginia" .
