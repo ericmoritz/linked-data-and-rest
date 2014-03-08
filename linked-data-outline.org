@@ -1,11 +1,14 @@
-Linked Data and REST part 1
+[[https://docs.google.com/presentation/d/1l3d3R_P305gI8CWRiXznJ8XjG5rVeICGAQEkYgfq8Sg/edit?usp=sharing][Linked Data and REST part 1]]
+
 * DONE Linked Data and REST
   CLOCK: [2014-03-03 Mon 19:47]--[2014-03-03 Mon 20:00] =>  0:13
   CLOCK: [2014-03-03 Mon 18:46]--[2014-03-03 Mon 19:11] =>  0:25
   CLOCK: [2014-03-03 Mon 18:38]--[2014-03-03 Mon 18:44] =>  0:06
   CLOCK: [2014-03-03 Mon 18:04]--[2014-03-03 Mon 18:29] =>  0:25
 ** DONE What is this
-
+*** IN REVIEW Memorization
+*** DONE Slide
+*** DONE Text
 For those who don't know me, I am Eric Moritz.  
 
 I am the architect on the application services team.
@@ -32,7 +35,9 @@ Some research was obviously needed in order to build application services.
 This talk is my journey meet the requirements of application services.
 
 ** DONE A journey through time and space
-
+*** IN REVIEW Memorization
+*** DONE Slides
+*** DONE Talk
 Let me take you on a journey through time and space.  
 
 The time? sometime around 2005.  
@@ -73,7 +78,8 @@ Where did we go wrong?
 Lets travel to the time and place were REST was first made public.
 
 ** DONE In the year 2000
-
+*** IN REVIEW Memorization
+*** DONE Text
 We travel back to the year 2000.
 
 Roy T Fielding is publishing his dissertation on the architecture of the world wide web.
@@ -81,7 +87,8 @@ Roy T Fielding is publishing his dissertation on the architecture of the world w
 In his dissertation, he states the requirements of a web application.
 
 ** DONE Low Entry-barrier
-
+*** DRAFT Memorization
+*** DONE Text
 First, there must be a low barrier to entry. 
 
 Hypermedia was chosen as the user interface for its simplicity and generality.
@@ -115,7 +122,7 @@ application service.
 Because the service is driving the user interface, the time to
 interaction must be low.
 
-Research has shown that if the time to interaction is greater than
+Research has shown that when the time to interaction is greater than
 250ms the interface feels laggy.
 
 If an application can not meet this requirement it is not a fun web
