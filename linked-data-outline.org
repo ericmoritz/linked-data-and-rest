@@ -1,4 +1,4 @@
-[[https://docs.google.com/presentation/d/1l3d3R_P305gI8CWRiXznJ8XjG5rVeICGAQEkYgfq8Sg/edit?usp=sharing][Linked Data and REST part 1]]
+Slides: [[https://docs.google.com/presentation/d/1l3d3R_P305gI8CWRiXznJ8XjG5rVeICGAQEkYgfq8Sg/edit?usp=sharing][Linked Data and REST part 1]]
 
 * DONE Linked Data and REST
   CLOCK: [2014-03-03 Mon 19:47]--[2014-03-03 Mon 20:00] =>  0:13
